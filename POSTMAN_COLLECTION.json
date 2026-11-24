@@ -1,0 +1,222 @@
+{
+  "info": {
+    "name": "Student Dashboard API",
+    "description": "Postman collection untuk testing Student Dashboard API menggunakan Node-RED, Directus, dan PostgreSQL.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:1880/gesya/dashboard"
+    },
+    {
+      "key": "student_id",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Get Dashboard Overview",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/overview"
+          },
+          "response": [
+            {
+              "name": "Successful Response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"total_students\": 6,\n    \"active_students\": 5,\n    \"inactive_students\": 1\n  }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Students",
+      "item": [
+        {
+          "name": "Get All Students",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/students"
+          },
+          "response": [
+            {
+              "name": "Successful Response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"total\": 7,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"date_created\": \"2026-11-23T09:09:24.769Z\",\n      \"date_updated\": null,\n      \"nis\": \"2022001\",\n      \"name\": \"\\tAndi Pratama\",\n      \"class\": \"\\tXII RPL 1\",\n      \"gender\": \"male\",\n      \"status\": \"active\"\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nis\": \"TEST001\",\n  \"name\": \"Testing Student\",\n  \"class\": \"XII RPL 1\",\n  \"gender\": \"male\",\n  \"status\": \"active\"\n}"
+            },
+            "url": "{{base_url}}/students"
+          },
+          "response": [
+            {
+              "name": "Successful Response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Data siswa berhasil ditambahkan\",\n  \"data\": {\n    \"id\": 8,\n    \"nis\": \"TEST001\",\n    \"nama\": \"Testing Student\",\n    \"kelas\": \"XII RPL 1\",\n    \"jenis_kelamin\": \"Laki-laki\",\n    \"status\": \"Aktif\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Student",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Testing Student Updated\",\n  \"class\": \"XII RPL 2\",\n  \"gender\": \"male\",\n  \"status\": \"active\"\n}"
+            },
+            "url": "{{base_url}}/students/{{student_id}}"
+          },
+          "response": [
+            {
+              "name": "Successful Response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Data siswa berhasil diperbarui\",\n  \"data\": {\n    \"id\": 8,\n    \"nis\": \"TEST001\",\n    \"nama\": \"Testing Student Updated\",\n    \"kelas\": \"XII RPL 2\",\n    \"jenis_kelamin\": \"Laki-laki\",\n    \"status\": \"Aktif\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Student",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{base_url}}/students/{{student_id}}"
+          },
+          "response": [
+            {
+              "name": "Successful Response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Data siswa berhasil dihapus\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Settings",
+      "item": [
+        {
+          "name": "Get Settings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/settings"
+          },
+          "response": [
+            {
+              "name": "Successful Response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": 1,\n    \"school_name\": \"SMK Telkom Malang\",\n    \"admin_name\": \"Gesya Putri\",\n    \"email\": \"admin@smktelkommalang.sch.id\",\n    \"academic_year\": \"2026/2027\",\n    \"semester\": \"ganjil\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Settings",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"school_name\": \"SMK Telkom Malang\",\n  \"admin_name\": \"Gesya Putri\",\n  \"email\": \"admin@smktelkommalang.sch.id\",\n  \"academic_year\": \"2026/2027\",\n  \"semester\": \"ganjil\"\n}"
+            },
+            "url": "{{base_url}}/settings"
+          },
+          "response": [
+            {
+              "name": "Successful Response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Settings berhasil diperbarui\",\n  \"data\": {\n    \"id\": 1,\n    \"school_name\": \"SMK Telkom Malang\",\n    \"admin_name\": \"Gesya Putri\",\n    \"email\": \"admin@smktelkommalang.sch.id\",\n    \"academic_year\": \"2026/2027\",\n    \"semester\": \"ganjil\"\n  }\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
