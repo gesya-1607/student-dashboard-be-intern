@@ -1,90 +1,169 @@
-# Student Dashboard Backend Intern
+# Student Dashboard API
 
-## 1. Identifikasi Kebutuhan
+## Deskripsi
 
-Project Student Dashboard membutuhkan backend untuk mengelola data siswa, kelas, dan informasi sekolah.
+Student Dashboard API merupakan API backend yang dirancang untuk mengelola data siswa dan informasi dashboard. Proyek ini menggunakan Node-RED untuk membangun API dan Directus sebagai sistem manajemen data yang terhubung dengan PostgreSQL.
 
-Beberapa fitur yang dibutuhkan:
+API ini menyediakan endpoint untuk mengambil statistik dashboard, mengelola data siswa, serta mengelola pengaturan dashboard.
 
-- Menampilkan statistik siswa dan kelas pada dashboard.
-- Mengelola data siswa.
-- Mencari dan memfilter data siswa.
-- Mengelola data kelas.
-- Mengelola informasi sekolah dan admin.
+## Tujuan
 
-## 2. Database
+- Menyediakan API untuk pengelolaan data siswa.
+- Menampilkan statistik siswa pada dashboard.
+- Mendukung operasi CRUD pada data siswa.
+- Mengelola pengaturan dashboard.
+- Mengintegrasikan Node-RED dengan Directus dan PostgreSQL.
 
-Database menggunakan PostgreSQL yang dijalankan melalui Docker dan dikelola menggunakan Directus.
+## Teknologi yang Digunakan
 
-Database yang telah dibuat terdiri dari beberapa collection:
+| Teknologi | Deskripsi |
+|---|---|
+| Node-RED | Pengembangan API backend |
+| Directus | Sistem manajemen data |
+| PostgreSQL | Database |
+| Postman | Pengujian API |
+| HTTP | Komunikasi API |
 
-### Students
+## Fitur
 
-Collection Students digunakan untuk menyimpan data siswa.
+- Dashboard Overview
+- Mendapatkan Semua Data Siswa
+- Menambahkan Data Siswa
+- Memperbarui Data Siswa
+- Menghapus Data Siswa
+- Mendapatkan Pengaturan Dashboard
+- Memperbarui Pengaturan Dashboard
 
-Field yang tersedia:
+## Endpoint API
 
-- `id`
-- `nis`
-- `name`
-- `class`
-- `gender`
-- `status`
-- `date_created`
-- `date_updated`
+Base URL:
 
-### kelas
+```text
+http://localhost:1880/gesya/dashboard
+```
 
-Collection kelas digunakan untuk menyimpan data kelas.
+| Method | Endpoint | Deskripsi |
+|---|---|---|
+| GET | `/overview` | Mendapatkan ringkasan dashboard |
+| GET | `/students` | Mendapatkan semua data siswa |
+| POST | `/students` | Menambahkan data siswa baru |
+| PATCH | `/students/:id` | Memperbarui data siswa |
+| DELETE | `/students/:id` | Menghapus data siswa |
+| GET | `/settings` | Mendapatkan pengaturan dashboard |
+| PATCH | `/settings` | Memperbarui pengaturan dashboard |
 
-Data kelas yang telah dibuat:
+## Data Siswa
 
-- XII RPL 1
-- XII RPL 2
+Data siswa memiliki beberapa field berikut:
 
-Collection kelas juga memiliki relasi dengan collection Students sehingga data siswa dapat terhubung dengan kelasnya.
+| Field | Deskripsi |
+|---|---|
+| id | ID siswa |
+| nis | Nomor Induk Siswa |
+| name | Nama siswa |
+| class | Kelas siswa |
+| gender | Jenis kelamin siswa |
+| status | Status siswa |
 
-### app_settings
+## Data Pengaturan
 
-Collection app_settings digunakan untuk menyimpan informasi pengaturan sekolah.
+Pengaturan dashboard memiliki beberapa field berikut:
 
-Field yang tersedia:
+| Field | Deskripsi |
+|---|---|
+| school_name | Nama sekolah |
+| admin_name | Nama administrator |
+| email | Email administrator |
+| academic_year | Tahun ajaran |
+| semester | Semester akademik |
 
-- `school_name`
-- `admin_name`
-- `email`
-- `academic_year`
-- `semester`
+## Alur Sistem
 
-## 3. Teknologi yang Digunakan
+```text
+Client / Postman
+       |
+       v
+    Node-RED
+       |
+       v
+   HTTP Request
+       |
+       v
+    Directus
+       |
+       v
+  PostgreSQL
+```
 
-- PostgreSQL
-- Docker
-- Directus
-- Node-RED
+Node-RED menerima permintaan API dari client, memproses data, dan berkomunikasi dengan Directus. Directus mengelola data yang tersimpan di PostgreSQL.
 
-## 4. Pengembangan API
+## Pengujian API
 
-Node-RED digunakan untuk mengembangkan API dan menghubungkan data dari Directus.
+Semua endpoint API telah diuji menggunakan Postman.
 
-Pengujian yang telah dilakukan:
+| Endpoint | Method | Status |
+|---|---|---|
+| Dashboard Overview | GET | Berhasil |
+| Get Students | GET | Berhasil |
+| Create Student | POST | Berhasil |
+| Update Student | PATCH | Berhasil |
+| Delete Student | DELETE | Berhasil |
+| Get Settings | GET | Berhasil |
+| Update Settings | PATCH | Berhasil |
 
-- Menghubungkan Node-RED dengan Directus.
-- Mengambil data kelas dari Directus menggunakan HTTP Request.
-- Menampilkan hasil data melalui Debug Node.
+## Instalasi dan Konfigurasi
 
-Endpoint yang telah diuji:
+### 1. Instal Node-RED
 
-`GET /items/kelas`
+Pastikan Node.js dan Node-RED telah terinstal.
 
-## 5. Progress
+Jalankan Node-RED:
 
-- Membuat database PostgreSQL menggunakan Docker.
-- Menjalankan Directus.
-- Membuat collection Students.
-- Membuat collection kelas.
-- Membuat collection app_settings.
-- Menambahkan data siswa dan kelas.
-- Membuat relasi antara siswa dan kelas.
-- Menghubungkan Node-RED dengan Directus.
-- Menguji pengambilan data kelas melalui Node-RED.
+```bash
+node-red
+```
+
+Akses Node-RED melalui:
+
+```text
+http://localhost:1880
+```
+
+### 2. Jalankan Directus
+
+Pastikan Directus dan PostgreSQL telah berjalan.
+
+Akses Directus melalui:
+
+```text
+http://localhost:8055
+```
+
+### 3. Konfigurasi Environment Variables
+
+Konfigurasikan environment variables yang diperlukan:
+
+```env
+DIRECTUS_URL=http://localhost:8055
+DIRECTUS_TOKEN=your_directus_token
+```
+
+### 4. Import Flow Node-RED
+
+Import file JSON flow Node-RED ke dalam Node-RED.
+
+Deploy flow setelah proses import selesai.
+
+### 5. Pengujian API
+
+Gunakan Postman untuk menguji endpoint API.
+
+Base URL:
+
+```text
+http://localhost:1880/gesya/dashboard
+```
+
+## Author
+
+**Gesya Putri**
